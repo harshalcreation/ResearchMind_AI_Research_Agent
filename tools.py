@@ -5,12 +5,22 @@ from tavily import TavilyClient
 import os 
 from dotenv import load_dotenv
 from rich import print
+# load_dotenv()
+
+# tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+import streamlit as st
+from dotenv import load_dotenv
+from tavily import TavilyClient
+import os
+
 load_dotenv()
 
-import streamlit as st
+try:
+    api_key = st.secrets["TAVILY_API_KEY"]
+except:
+    api_key = os.getenv("TAVILY_API_KEY")
 
-tavily = TavilyClient(api_key=st.secrets["TAVILY_API_KEY"])
-
+tavily = TavilyClient(api_key=api_key)
 @tool
 def web_search(query : str) -> str:
     """Search the web for recent and reliable information on a topic . Returns Titles , URLs and snippets."""
